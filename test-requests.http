@@ -1,0 +1,41 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="voiceTest.mp3"
+Content-Type: audio/mpeg
+
+< ./voiceTest.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/e349dec0-f6c1-4a87-98d8-df2e99661007/transcription
+Content-Type: application/json
+
+{
+  "prompt": "teste, desenvolvimento"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/generate
+Content-Type: application/json
+
+{
+  "videoId": "e349dec0-f6c1-4a87-98d8-df2e99661007",
+  "temperature": 0.5, 
+  "template": "gere 5 variantes do texto a seguir: ''' {transcription} '''"
+}
+
+
+
+
